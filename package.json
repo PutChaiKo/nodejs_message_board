@@ -1,0 +1,12 @@
+{
+    "name": "msaager",
+    "version": "1.0.0",
+    "description": "留言系统",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "dependencies": {
+        "koa": "2.6.2"
+    }
+}
