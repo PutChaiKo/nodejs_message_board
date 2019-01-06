@@ -3,14 +3,24 @@ const Koa = require('koa');
 const app = new Koa();
 
 app.use(async (ctx, next) => {
+  console.log(`${ctx.request.method}`, `${ctx.request.url}`);
+  await next();
+});
+
+app.use(async (ctx, next)=>{
+    const start = new Date().getTime();
     await next();
-    ctx.response.type = 'text/html';
-    ctx.response.body = '<h1>Hello, koa2!</h1>';
+    const ms = new Date().getTime() - start;
+    console.log(`Time: ${ms}ms`)
+})
+app.use(async (ctx, next) => {
+  await next();
+  ctx.response.type = 'text/html';
+  ctx.response.body = '<h1>Hello</h1>';
 });
 
 app.listen(3200);
-console.log('app started at port 3000...');
-
+console.log('打开 http://localhost:3200/');
 
 // const Koa = require('koa');
 // const app = new Koa();
