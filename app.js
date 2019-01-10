@@ -1,6 +1,6 @@
 const Koa = require('koa');
-
 const router = require('koa-router')();
+const bodyParser = require('koa-bodyparser');
 
 const app = new Koa();
 
@@ -10,16 +10,28 @@ app.use(async (ctx, next) => {
 });
 
 // add url-router
-router.get('/hello/:name', async (ctx, next) => {
-    var name = ctx.params.name;
-    ctx.response.body = `<h1>hello ${name}</h1>`
-    await next();
-})
+router.get('/', async (ctx, next) => {
+  ctx.response.body = `<h1>Index</h1>
+    <form action="/sigin" method="post">
+    <p>Name: <input name="name" value="koa" /></p>
+    <p>password: <input name="password" type="password" /></p>
+    <p><input type="submit" value="Submit" /></p>
+    </form>
+    `;
+});
 
-router.get('/', async (ctx, next)=>{
-    ctx.response.body = '<h1>Index</h1>'
-})
+router.post('/sigin', async (ctx, next) => {
+  var name = ctx.request.body.name || '';
+  var password = ctx.request.body.password || '';
+  console.log(`name: ${name}, pw: ${password}`);
+  if (name === 'koa' && password === '123456') {
+    ctx.response.body = `<h1>welcome ${name}</h1>`;
+  } else {
+    ctx.response.body = `<h1>Try again</h1>`;
+  }
+});
 
+app.use(bodyParser());
 app.use(router.routes());
 // app.use(async (ctx, next)=>{
 //     const start = new Date().getTime();
