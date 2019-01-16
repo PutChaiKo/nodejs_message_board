@@ -5,12 +5,26 @@ const fs = require('fs');
 
 const app = new Koa();
 
+function addMapping(router, mapping) {
+    for (var url in mapping) {
+        var path = url.substring(4);
+        console.log('\033[40;32mpath\033[0m', path);
+    }
+}
+
 function addControllers(router) {
   var files = fs.readdirSync(__dirname + '/controllers');
-  var js_files = files.map((f)=> {
+  var js_files = files.filter((f)=> {
     return f.endsWith('.js');
   })
-  console.log(files);
+  console.log(js_files);
+
+  for (var f of js_files) {
+      console.log(`process controller: ${f}...`);
+      let mapping = require(__dirname + '/controllers/' + f)
+      console.log('\033[40;32m mapping \033[0m', mapping)
+      addMapping(router, mapping);
+  }
 }
 addControllers(router)
 // app.use(async (ctx, next) => {
@@ -55,7 +69,7 @@ addControllers(router)
 // });
 
 app.listen(3200);
-console.log('打开 http://localhost:3200/');
+console.log('打开 \033[35;1m http://localhost:3200/ \033[0m');
 
 // const Koa = require('koa');
 // const app = new Koa();

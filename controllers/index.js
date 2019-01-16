@@ -18,3 +18,8 @@ var fn_signin = async (ctx, next) => {
       ctx.response.body = `<h1>Try again</h1>`;
     }
 }
+
+module.exports = {
+    'GET /' :fn_index,
+    'POST /signin': fn_signin
+}
