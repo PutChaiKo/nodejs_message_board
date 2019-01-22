@@ -8,7 +8,7 @@ var fn_index = async (ctx, next) => {
     `;
 }
 
-var fn_signin = async (ctx, next) => {
+var fn_sigin = async (ctx, next) => {
     var name = ctx.request.body.name || '';
     var password = ctx.request.body.password || '';
     console.log(`name: ${name}, pw: ${password}`);
@@ -21,5 +21,5 @@ var fn_signin = async (ctx, next) => {
 
 module.exports = {
     'GET /' :fn_index,
-    'POST /signin': fn_signin
+    'POST /sigin': fn_sigin
 }
